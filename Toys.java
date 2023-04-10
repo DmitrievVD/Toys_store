@@ -5,23 +5,25 @@ import java.util.Random;
 
 public class Toys {
     private int id;
-    private static int volume;
+    private static int count = 0;
+    private int volume;
     private String name;
 
    private double random;
 
-    public Toys(int id, String name, double random) {
-        this.id = id;
+    public Toys(String name, double random, int volume) {
+        this.id = count;
+        count += 1;
         this.name = name;
         this.random = random;
-        this.volume += 1;
+        this.volume = volume;
     }
 
     public int getId() {
         return id;
     }
 
-    public static int getVolume(){
+    public int getVolume(){
         return volume;
     }
     public void setVolume(int volume){
@@ -42,6 +44,11 @@ public class Toys {
 
     public void setRandom(double random) {
         this.random = random;
+    }
+
+    @Override
+    public String toString() {
+        return getId() + " | " + getName() + " | кол-во: " + getVolume() + " | вес(%): " + getRandom();
     }
 
     public Toys getPrizeToy(ArrayList<Toys> arrToys) {
@@ -67,7 +74,7 @@ public class Toys {
         return null;
     }
 
-    public void savePrizeToyToFile(Toy prizeToy, String fileName){
+    public void savePrizeToyToFile(Toys prizeToy, String fileName){
         try {
             FileWriter writer = new FileWriter(fileName, true);
             writer.write(prizeToy.getName() + "\n");
