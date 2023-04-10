@@ -49,7 +49,6 @@ public class Main {
 
             }
         }
-    }
 
     static void sort(ArrayList<Toys> arr){
         arr.sort(new Comparator<Toys>() {
@@ -69,6 +68,7 @@ public class Main {
         double wt = user_input.nextDouble();
         Toys newtoy = new Toys(name, wt, val);
         toysArr.add(newtoy);
+        sort(toysArr);
     }
 
     static void editToy(){
@@ -79,6 +79,7 @@ public class Main {
                 System.out.print("Введите вес(%): ");
                 double val = user_input.nextDouble();
                 toy.setRandom(val);
+                sort(toysArr);
                 System.out.println("Изменения сохранены ");
                 return;
             }
