@@ -32,15 +32,16 @@ public class Main {
             System.out.print("Введите команду: ");
             String in = user_input.nextLine();
 
-            if (in.equals("read")){
+            if (in.equals("read")) {
                 for (Toys toy : toysArr) {
                     System.out.println(toy.toString());
                 }
+            }
             if (in.equals("add")){
                 addToy();
             }
             if (in.equals("edit")){
-
+                editToy();
             }
 
 
@@ -68,5 +69,20 @@ public class Main {
         double wt = user_input.nextDouble();
         Toys newtoy = new Toys(name, wt, val);
         toysArr.add(newtoy);
+    }
+
+    static void editToy(){
+        System.out.print("Введите id: ");
+        int i = user_input.nextInt();
+        for (Toys toy: toysArr) {
+            if (toy.getId() == i){
+                System.out.print("Введите вес(%): ");
+                double val = user_input.nextDouble();
+                toy.setRandom(val);
+                System.out.println("Изменения сохранены ");
+                return;
+            }
+        }
+        System.out.println("Нету такой!!!");
     }
 }
