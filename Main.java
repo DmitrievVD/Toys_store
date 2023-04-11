@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 public class Main {
     public static ArrayList<Toys> toysArr = new ArrayList<>();
-    public static ArrayList<Toys> prizToys = new ArrayList<>();
+    public static ArrayList<String> prizToys = new ArrayList<>();
 
     public static Scanner user_input = new Scanner(System.in);
     public static void main(String[] args) {
-        Toys toys2 = new Toys("Мишка", 10, 10);
-        Toys toys1 = new Toys("Робот", 15, 10);
-        Toys toys3 = new Toys("Симпл", 20, 30);
+        Toys toys2 = new Toys("Мишка", 10, 5);
+        Toys toys1 = new Toys("Робот", 15, 5);
+        Toys toys3 = new Toys("Симпл", 20, 5);
         System.out.println();
 
         System.out.print("Press Enter to begin.");
@@ -23,7 +23,9 @@ public class Main {
                 "add -> Добавить игрушку\n" +
                 "edit -> Изменить вес\n" +
                 "priz -> Выйграть игрушку\n" +
-                "get -> Получить игрушку";
+                "prizList -> Посмотреть выйгрышь\n" +
+                "get -> Получить игрушку\n" +
+                "exit -> выйти";
 
         sort(toysArr);
 
@@ -37,20 +39,41 @@ public class Main {
                     System.out.println(toy.toString());
                 }
             }
-            if (in.equals("add")){
+            else if (in.equals("add")){
                 addToy();
             }
-            if (in.equals("edit")){
+            else if (in.equals("edit")){
                 editToy();
             }
-
-
-            user_input.nextLine();
+            else if (in.equals("priz")){
+                if (Toys.getSizeToys(toysArr) > 0){
+                    Toys toyPriz = Toys.getPrizeToy(toysArr);
+                    System.out.println("Вы выйграли: " + toyPriz.getName());
+                    prizToys.add(toyPriz.getName());
+                }else {
+                    System.out.println("Игрушки закончились :(");
+                }
 
             }
+            else if (in.equals("prizList")){
+                for (String prizToy : prizToys) {
+                    System.out.println(prizToy.toString());
+                }
+            }
+            else if (in.equals("get")) {
+                Toys.savePrizeToyToFile(prizToys, "C:\\Users\\pc\\Downloads\\Lesson_09\\ToyStore\\src\\main\\java\\priz.txt");
+            }
+            else if (in.equals("exit")){
+                break;
+            }
+            user_input.nextLine();
+            }
+        System.out.println("--------------------------");
+        System.out.println("---Завершение программы---");
+        System.out.println("--------------------------");
         }
 
-    static void sort(ArrayList<Toys> arr){
+    static void sort(ArrayList<Toys> arr){ // Сортировка по весу(%)
         arr.sort(new Comparator<Toys>() {
             @Override
             public int compare(Toys o1, Toys o2) {
@@ -59,7 +82,7 @@ public class Main {
         });
     }
 
-    static void addToy(){
+    static void addToy(){ // Добавление игрушки
         System.out.print("Введите название: ");
         String name = user_input.nextLine();
         System.out.print("Введите кол-во: ");
@@ -71,7 +94,7 @@ public class Main {
         sort(toysArr);
     }
 
-    static void editToy(){
+    static void editToy(){ // Изменение веса игрушки
         System.out.print("Введите id: ");
         int i = user_input.nextInt();
         for (Toys toy: toysArr) {

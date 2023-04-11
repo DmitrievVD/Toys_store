@@ -45,13 +45,20 @@ public class Toys {
     public void setRandom(double random) {
         this.random = random;
     }
-
     @Override
     public String toString() {
         return getId() + " | " + getName() + " | кол-во: " + getVolume() + " | вес(%): " + getRandom();
     }
 
-    public Toys getPrizeToy(ArrayList<Toys> arrToys) {
+    public static int getSizeToys(ArrayList<Toys> arrToys){
+        int res = 0;
+        for (Toys t : arrToys) {
+            res += t.getVolume();
+        }
+        return res;
+    }
+
+    static public Toys getPrizeToy(ArrayList<Toys> arrToys) { // Получение игрушки рандомным способом
         double totalFreq = 0.0;
         for (Toys t : arrToys) {
             totalFreq += t.getRandom();
@@ -66,7 +73,7 @@ public class Toys {
                     t.setVolume(t.getVolume() - 1);
                     return t;
                 } else {
-                    System.out.println("This toy is out of stock.");
+                    System.out.println("Игрушки закончились :(");
                     return null;
                 }
             }
@@ -74,13 +81,20 @@ public class Toys {
         return null;
     }
 
-    public void savePrizeToyToFile(Toys prizeToy, String fileName){
+    static public void savePrizeToyToFile(ArrayList<String> prizeToy, String fileName){ // Сохранение игрушки в фаил
         try {
-            FileWriter writer = new FileWriter(fileName, true);
-            writer.write(prizeToy.getName() + "\n");
-            writer.close();
+            FileWriter fw = new FileWriter(fileName, true);
+            if (prizeToy.size() > 0) {
+                fw.write(prizeToy.get(0).toString() + "\n");
+                System.out.println("Вы получили: " + prizeToy.get(0).toString());
+                prizeToy.remove(0);
+                fw.close();
+            }else{
+                System.out.println("Ваш список призовых игрушек пуст :(");
+            }
+
         } catch (IOException e) {
-            System.out.println("An error occurred when saving prize toy to file.");
+            System.out.println("Ошибка при сохранении!");
             e.printStackTrace();
         }
     }
